@@ -328,7 +328,7 @@ const DefaultLayout = ({ children }) => {
                                                     {lang("verMapa")}
                                                 </a>
                                             </div>
-                                            <p className="font-secondary text-xs 2xl:text-sm text-white opacity-60 max-w-[220px] lg:max-w-[340px]">
+                                            <p className="font-secondary text-xs 2xl:text-sm text-white opacity-60 max-w-[220px] lg:max-w-[360px]">
                                                 {dados_gerais.endereco} |{" "}
                                                 {lang("endereco4")} {dados_gerais.cep}
                                             </p>
@@ -514,7 +514,7 @@ const DefaultLayout = ({ children }) => {
 
                             <div className="w-full md:w-auto text-white text-sm">
                                 <div className="flex max-md:flex-wrap mx-auto">
-                                    <div className="max-w-[350px] md:max-w-[200px] lg:max-w-[350px]">
+                                    <div className="max-w-[350px] md:max-w-[200px] lg:max-w-[360px]">
                                         {dados_gerais.endereco} |{" "}
                                         {lang("endereco4")} {dados_gerais.cep}
                                         <a
