@@ -47,6 +47,10 @@ export const IndividualImage = ({ individualContent, imagensPath, imagensClass, 
         setIsCropModalOpen(false);
     };
     
+    useEffect(() => {
+        setIsChecked(individualContent.visivel);
+    }, [individualContent?.visivel]);
+    
     return (
         <>
             <div className="group relative flex justify-center overflow-hidden border select-none h-full">

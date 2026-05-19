@@ -32,7 +32,7 @@ class ConteudosController extends Controller
                 'conteudosIdiomas.0.video' => $request->exists('conteudosIdiomas.0.video') ? 'required|url' : 'nullable',
                 'img' => $request->hasFile('img') ? 'image|mimes:png,jpg|max:5120' : 'nullable',
                 'img_mobile' => $request->hasFile('img_mobile') ? 'image|mimes:png,jpg|max:5120' : 'nullable',
-                'conteudosIdiomas.0.arq' => $request->exists('conteudosIdiomas.0.arq') ? 'file|max:20480' : 'nullable',
+                'conteudosIdiomas.0.arq' => $request->exists('conteudosIdiomas.0.arq') ? 'file|mimes:pdf|max:2048' : 'nullable',
             ],
             [
                 'conteudosIdiomas.0.titulo.required' => 'Por favor, informe o título.',
@@ -49,7 +49,8 @@ class ConteudosController extends Controller
                 'img_mobile.mimes' => 'Os formatos de imagem mobile válidos são: JPG e PNG.',
                 'img_mobile.max' => 'Por favor, envie um arquivo menor que 5MB.',
                 'conteudosIdiomas.0.arq.file' => 'Por favor, selecione um arquivo válido.',
-                'conteudosIdiomas.0.arq.max' => 'O tamanho do arquivo deve ser menor que 20MB.',
+                'conteudosIdiomas.0.arq.mimes' => 'O formato de arquivo permitido é .pdf.',
+                'conteudosIdiomas.0.arq.max' => 'O tamanho do arquivo deve ser menor que 2MB.',
             ]);
 
             $conteudo = Conteudo::query()
@@ -75,8 +76,6 @@ class ConteudosController extends Controller
                     });
                 })
                 ->first();
-
-            $prev_arquivo = $conteudo_idioma->arquivo;
 
             if (!$conteudo) {
                 return redirect()->back()->with('message', ['type' => 'error', 'msg' => 'Não foi possível salvar as informações. Tente novamente mais tarde.']);
@@ -155,8 +154,8 @@ class ConteudosController extends Controller
                 }
 
                 if ($conteudo->parametro->habilitar_arquivo && $request->file('arq') && $request->file('arq')->getError() == 0) {
-                    if (isset($prev_arquivo) && $conteudo_idioma->arquivo && File::exists(public_path('content/files/') . $prev_arquivo->arquivo)) {
-                        File::delete(public_path('content/files/') . $prev_arquivo->arquivo);
+                    if (isset($conteudoOriginal) && $conteudo_idioma->arquivo && File::exists(public_path('content/files/') . $conteudoOriginal->arquivo)) {
+                        File::delete(public_path('content/files/') . $conteudoOriginal->arquivo);
                     }
 
                     $request->file('arq')->storeAs('content/files/', $conteudo_idioma->arquivo);
